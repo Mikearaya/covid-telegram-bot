@@ -3,6 +3,5 @@ test.rb
 .vscode
 package-lock.json
 node_modules/
-bin/tic-tac-toe
-lib/bot.rb
+
 lib/motive.rb
