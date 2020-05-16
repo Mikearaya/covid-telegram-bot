@@ -2,13 +2,19 @@ require 'telegram/bot'
 require_relative './covid_api.rb'
 class CovidBot
   TOKEN = '1165981459:AAEsQhEuY-mWtry8-WBrdDg8IB0fc16CnAY'.freeze
+
   def initialize(first_name, message, username)
     @first_name = first_name
     @message = message
     @username = username
+    @covid_api = CovidAPI.new
   end
 
-  private
+  def get_country_stat(country)
+    raise unless CovidAPI.country_exists(country)
+
+    @covid_api.get_country(country)
+  end
 
   def display_stat(val)
     <<~HEARDOC

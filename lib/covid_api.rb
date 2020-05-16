@@ -7,11 +7,9 @@ class CovidAPI
   @values = nil
   include Countries
 
-  def initialize
-    @summary = make_the_request
-  end
+  def initialize; end
 
-  def country_exists(search = '')
+  def self.country_exists(search = '')
     val = false
 
     unless search.nil?
@@ -22,18 +20,21 @@ class CovidAPI
     val
   end
 
+  def get_country(search)
+    @summary = make_the_request
+    val = @summary['Countries'].select do |country|
+      country['Country'].downcase == search.to_s.downcase
+    end
+    val
+  end
+
+  private
+
   def make_the_request
     url = 'https://api.covid19api.com/summary'
     uri = URI(url)
     response = Net::HTTP.get(uri)
     response = JSON.parse(response)
     response
-  end
-
-  def get_country(search)
-    val = @summary['Countries'].select do |country|
-      country['Country'].downcase == search.to_s.downcase
-    end
-    val
   end
 end
