@@ -1,0 +1,33 @@
+{
+  "name": "covid-telegram-bot",
+  "version": "1.0.0",
+  "description": "Covid Telegram Bot",
+  "devDependencies": {
+    "husky": "^4.2.3",
+    "lint-staged": "^10.1.2"
+  },
+  "scripts": {
+    "stylelint": ""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/**/*.rb": [
+      "rubocop"
+    ],
+    "./spec/*.rb": [
+      "rspec"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikearaya/covid-telegram-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {},
+  "homepage": "https://mikearaya.github.io/covid-telegram-bot#readme"
+}
