@@ -3,5 +3,3 @@ test.rb
 .vscode
 package-lock.json
 node_modules/
-
-lib/motive.rb

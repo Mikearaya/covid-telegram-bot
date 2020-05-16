@@ -3,6 +3,7 @@ AllCops:
     - "README.md"
     - "Guardfile"
     - "Rakefile"
+    - "./lib/countries.rb"
 
   DisplayCopNames: true
 
