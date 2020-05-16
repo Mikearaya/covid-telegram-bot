@@ -20,12 +20,17 @@ class CovidAPI
     val
   end
 
-  def get_country(search)
+  def by_country(search)
     @summary = make_the_request
     val = @summary['Countries'].select do |country|
-      country['Country'].downcase == search.to_s.downcase
+      country['Country'].downcase == search.to_s.downcase || country['CountryCode'].downcase == search.to_s.downcase
     end
     val
+  end
+
+  def global
+    @summary = make_the_request
+    @summary['Global']
   end
 
   private

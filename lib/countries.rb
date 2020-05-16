@@ -228,7 +228,7 @@ module Countries
     { "name": 'Ukraine', "code": 'UA' },
     { "name": 'United Arab Emirates', "code": 'AE' },
     { "name": 'United Kingdom', "code": 'GB' },
-    { "name": 'United States', "code": 'US' },
+    { "name": 'United States of america', "code": 'US' },
     { "name": 'United States Minor Outlying Islands', "code": 'UM' },
     { "name": 'Uruguay', "code": 'UY' },
     { "name": 'Uzbekistan', "code": 'UZ' },

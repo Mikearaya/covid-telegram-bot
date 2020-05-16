@@ -4,40 +4,80 @@ class CovidBot
   TOKEN = '1165981459:AAEsQhEuY-mWtry8-WBrdDg8IB0fc16CnAY'.freeze
 
   def initialize(first_name, message, username)
-    @first_name = first_name
+    @first_name = first_name.to_s
     @message = message
-    @username = username
+    @username = username.to_s
     @covid_api = CovidAPI.new
   end
 
-  def get_country_stat(country)
+  def country_stat(country)
     raise unless CovidAPI.country_exists(country)
 
-    @covid_api.get_country(country)
+    @covid_api.by_country(country)
+  end
+
+  def global_stat
+    @covid_api.global
   end
 
   def display_stat(val)
     <<~HEARDOC
 
-      Country: #{val[-1]['Country']}
-      Code: #{val[-1]['CountryCode']}
-      New Confirmed: #{val[-1]['NewConfirmed']}
-      Total Confirmed: #{val[-1]['TotalConfirmed']}
-      New Deaths: #{val[-1]['NewDeaths']}
-      Total Deaths: #{val[-1]['TotalDeaths']}
-      New Recovered: #{val[-1]['NewRecovered']}
-      Total Recovered: #{val[-1]['TotalRecovered']}
-      Active: #{val[-1]['TotalConfirmed'] - val[-1]['TotalRecovered']}
+      Country: #{val['Country']}
+      Code: #{val['CountryCode']}
+                Confirmed
+      New Confirmed: #{val['NewConfirmed']}
+      Total Confirmed: #{val['TotalConfirmed']}
+
+                Deaths
+      New Deaths: #{val['NewDeaths']}
+      Total Deaths: #{val['TotalDeaths']}
+
+                Recovered
+      New Recovered: #{val['NewRecovered']}
+      Total Recovered: #{val['TotalRecovered']}
+
+                Active
+      Active: #{val['TotalConfirmed'] - val['TotalRecovered']}
+    HEARDOC
+  end
+
+  def display_global_stat(val)
+    <<~HEARDOC
+                    GLOBAL
+
+                Confirmed
+      New Confirmed: #{val['NewConfirmed']}
+      Total Confirmed: #{val['TotalConfirmed']}
+                Deaths
+      New Deaths: #{val['NewDeaths']}
+      Total Deaths: #{val['TotalDeaths']}
+                Recovered
+      New Recovered: #{val['NewRecovered']}
+      Total Recovered: #{val['TotalRecovered']}
+                Active
+      Active: #{val['TotalConfirmed'] - val['TotalRecovered']}
     HEARDOC
   end
 
   def start_message
     <<~HEARDOC
       Hello, #{@first_name} , welcome to motivation chat bot created by Mikael Araya
-      the chat bot is to give you updated information for COVID-19 .
-      Use  /start to start the bot,  /stop to end the bot, /help to get help.
-      after starting the bot send the country name you want to get COVID-19 information or
-      send global to get summary for global numbers
+      the bot is created to give you updated information for COVID-19 .
+      Use  /start to start the bot,  /stop to end the bot and /help to get helpful information.
+
+      After starting the bot send (country name eg: ethiopia or country code eg: et for ethiopia)
+      to get COVID-19 information or send global to get summary for global numbers
+    HEARDOC
+  end
+
+  def help_manual
+    <<~HEARDOC
+      Enter the following to interact with the bot:
+      -> Country name or country code to get latest statistics of the country
+        example: sending ethiopia or et will get you latest numbers of cases in ethiopia
+      -> Global to get total global cases
+      -> /stop to stop the bot
     HEARDOC
   end
 
