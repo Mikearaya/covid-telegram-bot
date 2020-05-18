@@ -33,6 +33,17 @@ class CovidAPI
     @summary['Global']
   end
 
+  def supported_countries(text = '')
+    countries = ''
+    COUNTRIES.each do |country|
+      if country[:name].downcase.match?(text.downcase) || country[:code].downcase.match?(text.downcase)
+        countries += "#{country[:name]} --- code: #{country[:code]} \n"
+      end
+    end
+
+    countries.size.zero? ? "I couldn't find a country that match ( #{text}) :-(, let's try another" : countries
+  end
+
   private
 
   def make_the_request

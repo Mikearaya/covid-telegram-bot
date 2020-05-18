@@ -13,6 +13,9 @@ Telegram::Bot::Client.run(CovidBot::TOKEN) do |bot|
         bot.api.send_message(chat_id: message.chat.id, text: newbot.stop_message, date: message.date)
       when '/help'
         bot.api.send_message(chat_id: message.chat.id, text: newbot.help_manual, date: message.date)
+      when %r{^/search}
+        text = message.text.split(' ')
+        bot.api.send_message(chat_id: message.chat.id, text: newbot.display_country_list(text[1]), date: message.date)
       when 'global'
         value = newbot.global_stat
         bot.api.send_message(chat_id: message.chat.id, text: newbot.display_global_stat(value), date: message.date)

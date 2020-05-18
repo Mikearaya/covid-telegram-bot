@@ -21,6 +21,10 @@ class CovidBot
     @covid_api.global
   end
 
+  def display_country_list(text)
+    @covid_api.supported_countries(text)
+  end
+
   def display_stat(val)
     <<~HEARDOC
 
