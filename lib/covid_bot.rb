@@ -74,13 +74,17 @@ class CovidBot
       Hello, #{@first_name} , welcome to Bionic COVID-19 chat bot created by Mikael Araya
       the bot is created to give you updated information for COVID-19 .
       Use
+
       /start to start the bot
 
-      After starting the bot send (country name eg: ethiopia or country code eg: et for ethiopia)
-      to get COVID-19 information or send global to get summary for global numbers
+      After starting the bot send
+      - country name (eg: ethiopia)
+      - country code (eg: et for ethiopia)
+      - global to get summary for global numbers
+
+      to get COVID-19 information
 
       More Commands
-
       /stop to end the bot
       /help to get helpful information
       /search search term, to serch supported countries list

@@ -33,8 +33,29 @@ describe CovidBot do
     let(:first_name) { 'Mikael' }
     let(:message) { 'ethiopia' }
     let(:username) { 'starboy_12' }
-    it 'should display message for current user name' do
+    it 'display message for current user name' do
       expect(subject.start_message).to match(/mikael/i)
+    end
+    it 'display message /start instruction' do
+      expect(subject.start_message).to match(%r{/start}i)
+    end
+    it 'display message /stop instruction' do
+      expect(subject.start_message).to match(%r{/stop}i)
+    end
+    it 'display message /help instruction' do
+      expect(subject.start_message).to match(%r{/help}i)
+    end
+    it 'display message /search instruction' do
+      expect(subject.start_message).to match(%r{/search}i)
+    end
+    it 'display message country name instruction' do
+      expect(subject.start_message).to match(/country name/i)
+    end
+    it 'display message country code instruction' do
+      expect(subject.start_message).to match(/country code/i)
+    end
+    it 'display message global instruction' do
+      expect(subject.start_message).to match(/global/i)
     end
   end
 
