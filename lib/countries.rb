@@ -243,5 +243,9 @@ module Countries
     { "name": 'Zambia', "code": 'ZM' },
     { "name": 'Zimbabwe', "code": 'ZW' }
   ].freeze
+
+  def self.generate_flag(code)
+    "https://www.countryflags.io/#{code}/shiny/64.png"
+  end
 end
 # rubocop:enable Metrics/ModuleLength

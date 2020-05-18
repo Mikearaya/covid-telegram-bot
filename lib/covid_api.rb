@@ -38,7 +38,7 @@ class CovidAPI
 
     results = []
     val.each_with_index do |item, i|
-      results << [i, item['Country'], item]
+      results << { id: i, name: item['Country'], stat: item, flag: Countries.generate_flag(item['CountryCode']) }
     end
     results
   end
