@@ -4,7 +4,6 @@ require 'json'
 require_relative 'countries.rb'
 
 class CovidAPI
-  @values = nil
   include Countries
 
   def initialize; end

@@ -27,6 +27,10 @@ describe CovidBot do
     let(:message) { 'ethiopia' }
     let(:username) { 'starboy_12' }
     it { is_expected.to have_attributes(first_name: 'Mikael', message: 'ethiopia', username: 'starboy_12') }
+
+    it 'Should have correct TOKEN key' do
+      expect(CovidBot::TOKEN).to eq '1165981459:AAEsQhEuY-mWtry8-WBrdDg8IB0fc16CnAY'
+    end
   end
 
   context '#start_message should' do
@@ -146,6 +150,20 @@ describe CovidBot do
 
     it 'display active' do
       expect(subject.display_stat(global_result)).to match(/active: 304444/i)
+    end
+  end
+
+  context '#stop_message should' do
+    let(:first_name) { 'Mikael' }
+    let(:message) { 'ethiopia' }
+    let(:username) { 'starboy_12' }
+
+    it 'include first name' do
+      expect(subject.stop_message).to match(/mikael/i)
+    end
+
+    it 'include bye' do
+      expect(subject.stop_message).to match(/bye/i)
     end
   end
 end
