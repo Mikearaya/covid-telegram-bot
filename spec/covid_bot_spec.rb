@@ -2,7 +2,7 @@ require './lib/covid_bot.rb'
 require 'json'
 describe CovidBot do
   subject { CovidBot.new(first_name.to_s, message.to_s, username.to_s) }
-  result = {
+  country_result = {
     'Country' => 'Ethiopia',
     'CountryCode' => 'ET',
     'NewConfirmed' => 11,
@@ -12,6 +12,16 @@ describe CovidBot do
     'NewRecovered' => 1,
     'TotalRecovered' => 119
   }
+
+  global_result = {
+    'NewConfirmed' => 111_111,
+    'TotalConfirmed' => 344_444,
+    'NewDeaths' => 1_000_000,
+    'TotalDeaths' => 2_000_000,
+    'NewRecovered' => 4000,
+    'TotalRecovered' => 40_000
+  }
+
   context 'Initialized correctly' do
     let(:first_name) { 'Mikael' }
     let(:message) { 'ethiopia' }
@@ -48,39 +58,73 @@ describe CovidBot do
     let(:message) { 'ethiopia' }
     let(:username) { 'starboy_12' }
     it 'display country name' do
-      expect(subject.display_stat(result)).to match(/country: ethiopia/i)
+      expect(subject.display_stat(country_result)).to match(/country: ethiopia/i)
     end
 
     it 'display country code' do
-      expect(subject.display_stat(result)).to match(/code: ET/i)
+      expect(subject.display_stat(country_result)).to match(/code: ET/i)
     end
 
     it 'display New confirmed' do
-      expect(subject.display_stat(result)).to match(/new confirmed: 11/i)
+      expect(subject.display_stat(country_result)).to match(/new confirmed: 11/i)
     end
 
     it 'display total confirmed' do
-      expect(subject.display_stat(result)).to match(/total confirmed: 340/i)
+      expect(subject.display_stat(country_result)).to match(/total confirmed: 340/i)
     end
 
     it 'display New deaths' do
-      expect(subject.display_stat(result)).to match(/new deaths: 0/i)
+      expect(subject.display_stat(country_result)).to match(/new deaths: 0/i)
     end
 
     it 'display total deaths' do
-      expect(subject.display_stat(result)).to match(/total deaths: 5/i)
+      expect(subject.display_stat(country_result)).to match(/total deaths: 5/i)
     end
 
     it 'display New recovered' do
-      expect(subject.display_stat(result)).to match(/new recovered: 1/i)
+      expect(subject.display_stat(country_result)).to match(/new recovered: 1/i)
     end
 
     it 'display total recovered' do
-      expect(subject.display_stat(result)).to match(/total recovered: 119/i)
+      expect(subject.display_stat(country_result)).to match(/total recovered: 119/i)
     end
 
     it 'display active' do
-      expect(subject.display_stat(result)).to match(/active: 221/i)
+      expect(subject.display_stat(country_result)).to match(/active: 221/i)
+    end
+  end
+
+  context '#display_global_stat should' do
+    let(:first_name) { 'Mikael' }
+    let(:message) { 'ethiopia' }
+    let(:username) { 'starboy_12' }
+
+    it 'display New confirmed' do
+      expect(subject.display_stat(global_result)).to match(/new confirmed: 11111/i)
+    end
+
+    it 'display total confirmed' do
+      expect(subject.display_stat(global_result)).to match(/total confirmed: 344444/i)
+    end
+
+    it 'display New deaths' do
+      expect(subject.display_stat(global_result)).to match(/new deaths: 1000000/i)
+    end
+
+    it 'display total deaths' do
+      expect(subject.display_stat(global_result)).to match(/total deaths: 2000000/i)
+    end
+
+    it 'display New recovered' do
+      expect(subject.display_stat(global_result)).to match(/new recovered: 4000/i)
+    end
+
+    it 'display total recovered' do
+      expect(subject.display_stat(global_result)).to match(/total recovered: 40000/i)
+    end
+
+    it 'display active' do
+      expect(subject.display_stat(global_result)).to match(/active: 304444/i)
     end
   end
 end
