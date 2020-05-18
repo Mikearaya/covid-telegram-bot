@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require_relative '../lib/covid_bot.rb'
 
 Telegram::Bot::Client.run(CovidBot::TOKEN) do |bot|

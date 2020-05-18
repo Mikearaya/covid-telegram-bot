@@ -2,6 +2,7 @@ require 'telegram/bot'
 require_relative './covid_api.rb'
 class CovidBot
   TOKEN = '1165981459:AAEsQhEuY-mWtry8-WBrdDg8IB0fc16CnAY'.freeze
+  attr_reader :first_name, :message, :username
 
   def initialize(first_name, message, username)
     @first_name = first_name.to_s
@@ -62,7 +63,7 @@ class CovidBot
 
   def start_message
     <<~HEARDOC
-      Hello, #{@first_name} , welcome to motivation chat bot created by Mikael Araya
+      Hello, #{@first_name} , welcome to Bionic COVID-19 chat bot created by Mikael Araya
       the bot is created to give you updated information for COVID-19 .
       Use  /start to start the bot,  /stop to end the bot and /help to get helpful information.
 
