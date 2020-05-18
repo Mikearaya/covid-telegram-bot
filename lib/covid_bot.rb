@@ -25,6 +25,10 @@ class CovidBot
     @covid_api.supported_countries(text)
   end
 
+  def inline_query(query)
+    @covid_api.query_result(query)
+  end
+
   def display_stat(val)
     <<~HEARDOC
 

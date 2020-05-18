@@ -23,9 +23,24 @@ class CovidAPI
   def by_country(search)
     @summary = make_the_request
     val = @summary['Countries'].select do |country|
-      country['Country'].downcase == search.to_s.downcase || country['CountryCode'].downcase == search.to_s.downcase
+      country['Country'].downcase == search.to_s.downcase ||
+        country['CountryCode'].downcase == search.to_s.downcase
     end
     val
+  end
+
+  def query_result(search = '')
+    @summary = make_the_request
+    val = @summary['Countries'].select do |country|
+      country['Country'].downcase.match?(search.to_s.downcase) ||
+        country['CountryCode'].downcase.match?(search.to_s.downcase)
+    end
+
+    results = []
+    val.each_with_index do |item, i|
+      results << [i, item['Country'], item]
+    end
+    results
   end
 
   def global
