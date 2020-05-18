@@ -93,6 +93,7 @@ class CovidBot
       -> Country name or country code to get latest statistics of the country
         example: sending ethiopia or et will get you latest numbers of cases in ethiopia
       -> Global to get total global cases
+      -> /search [search term] to search for supported countries
       -> /stop to stop the bot
     HEARDOC
   end
