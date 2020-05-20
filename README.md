@@ -47,9 +47,9 @@ Since all the code is written using ruby `Ruby Runtime >= 1.9` ruby is required 
 
 once you have setup all the prerequisites clone the repository on your development enviroment
 
-`git@github.com:Mikearaya/tic-tac-toe.git`
+`git@github.com:Mikearaya/covid-telegram-bot.git`
 or
-`https://github.com/Mikearaya/tic-tac-toe.git`
+`https://github.com/Mikearaya/covid-telegram-bot.git`
 
 Install all the gem dependencies for the project
 
