@@ -74,6 +74,17 @@ For testing RSpec is used. To run test run the following command line.
 
 `rspec`
 
+## Future suuport
+
+in the future i'm planing to make this bot provide more helpful information regarding COVID-19, such as:
+
+- Guiedlines on how to stay safe from COVID.
+- Safest countries or least affected countries
+- country list who don't have quarantine period for travelers
+- quarantine period of each country for travelers
+
+and others gathered from users request
+
 ## Troubleshooting
 
 ## Authors
