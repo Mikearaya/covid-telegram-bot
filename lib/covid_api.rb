@@ -48,14 +48,13 @@ class CovidAPI
   end
 
   def supported_countries(text = '')
-    countries = ''
+    countries = []
     COUNTRIES.each do |country|
       if country[:name].downcase.match?(text.downcase) || country[:code].downcase.match?(text.downcase)
-        countries += "#{country[:name]} --- code: #{country[:code]} \n"
+        countries << country
       end
     end
-
-    countries.size.zero? ? "I couldn't find a country that match ( #{text}) :-(, let's try another" : countries
+    countries
   end
 
   private

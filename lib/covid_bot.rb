@@ -22,7 +22,18 @@ class CovidBot
   end
 
   def display_country_list(text)
-    @covid_api.supported_countries(text)
+    result = @covid_api.supported_countries(text)
+    if result.size.zero?
+      return "I couldn't find a country that match ( #{text})
+              :-(, let's try another"
+    end
+    countries = ''
+    result.each do |country|
+      if country[:name].downcase.match?(text.downcase) || country[:code].downcase.match?(text.downcase)
+        countries += "#{country[:name]} --- code: #{country[:code]} \n"
+      end
+    end
+    countries
   end
 
   def inline_query(query)
