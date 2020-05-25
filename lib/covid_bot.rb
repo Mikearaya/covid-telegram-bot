@@ -5,9 +5,9 @@ class CovidBot
   attr_reader :first_name, :message, :username
 
   def initialize(first_name, message, username)
-    @first_name = first_name.to_s
+    @first_name = first_name
     @message = message
-    @username = username.to_s
+    @username = username
     @covid_api = CovidAPI.new
   end
 
@@ -43,40 +43,48 @@ class CovidBot
   def display_stat(val)
     <<~HEARDOC
 
-      Country: #{val['Country']}
-      Code: #{val['CountryCode']}
+      Country: #{val['Name']}
+      Code: #{val['CountryInfo']['CountryCode']}
+
                 Confirmed
-      New Confirmed: #{val['NewConfirmed']}
-      Total Confirmed: #{val['TotalConfirmed']}
+      New Confirmed: #{val['TodayCases']}
+      Total Confirmed: #{val['TotalCases']}
+
+                Critical
+      Critical: #{val['Critical']}
 
                 Deaths
-      New Deaths: #{val['NewDeaths']}
+      New Deaths: #{val['TodayDeaths']}
       Total Deaths: #{val['TotalDeaths']}
 
                 Recovered
-      New Recovered: #{val['NewRecovered']}
-      Total Recovered: #{val['TotalRecovered']}
+      Recovered: #{val['Recovered']}
 
                 Active
-      Active: #{val['TotalConfirmed'] - val['TotalRecovered']}
+      Active: #{val['TotalCases'] - val['Recovered']}
     HEARDOC
   end
 
   def display_global_stat(val)
     <<~HEARDOC
-                    GLOBAL
+        GLOBAL
 
                 Confirmed
-      New Confirmed: #{val['NewConfirmed']}
-      Total Confirmed: #{val['TotalConfirmed']}
-                Deaths
-      New Deaths: #{val['NewDeaths']}
+      New Confirmed: #{val['TotalCasesToday']}
+      Total Confirmed: #{val['TotalCases']}
+
+                  Deaths
+      New Deaths: #{val['TotalDeathsToday']}
       Total Deaths: #{val['TotalDeaths']}
+
                 Recovered
-      New Recovered: #{val['NewRecovered']}
       Total Recovered: #{val['TotalRecovered']}
+
+                Affected Countries
+            #{val['TotalTerritories']}
+
                 Active
-      Active: #{val['TotalConfirmed'] - val['TotalRecovered']}
+      Active: #{val['TotalCases'] - val['TotalRecovered']}
     HEARDOC
   end
 
@@ -99,6 +107,9 @@ class CovidBot
       /stop to end the bot
       /help to get helpful information
       /search search term, to serch supported countries list
+
+      You can also use this bot anywhere inside telegram by typing @bionic_covid_bot
+        and searching for country you want statistics for
     HEARDOC
   end
 
@@ -110,6 +121,8 @@ class CovidBot
       -> Global to get total global cases
       -> /search [search term] to search for supported countries
       -> /stop to stop the bot
+      -> you can use this bot anywhere inside telegram by typing @bionic_covid_bot
+          and searching for country you want statistics for
     HEARDOC
   end
 
@@ -119,7 +132,7 @@ class CovidBot
     HEARDOC
   end
 
-  def log_request
-    @first_name + ' ' + @message + ' ' + @username
+  def log_request(type = 'message')
+    '[' + type + '] ' + @first_name + ' ' + @message + ' ' + @username
   end
 end
