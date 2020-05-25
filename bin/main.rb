@@ -8,6 +8,7 @@ def handle_inline_query(bot, message)
   return unless message.query.size > 1
 
   newbot = CovidBot.new(message.from.first_name, message.query, message.from.username)
+  puts newbot.log_request('query')
   query_result = newbot.inline_query(message.query)
 
   results = query_result.map do |arr|
@@ -23,7 +24,6 @@ def handle_inline_query(bot, message)
   end
 
   bot.api.answer_inline_query(inline_query_id: message.id, results: results)
-  puts newbot.log_request
 end
 
 Telegram::Bot::Client.run(CovidBot::TOKEN) do |bot|
@@ -33,8 +33,10 @@ Telegram::Bot::Client.run(CovidBot::TOKEN) do |bot|
       if message.instance_of?(Telegram::Bot::Types::InlineQuery)
         handle_inline_query(bot, message)
       elsif message.instance_of?(Telegram::Bot::Types::Message)
+
         id = message.chat.id
         newbot = CovidBot.new(message.from.first_name, message.text, message.from.username)
+        puts newbot.log_request('message')
         case message.text.to_s.downcase
         when '/start'
           bot.api.send_message(chat_id: message.chat.id, text: newbot.start_message)
@@ -52,7 +54,7 @@ Telegram::Bot::Client.run(CovidBot::TOKEN) do |bot|
           value = newbot.country_stat(message.text)
           bot.api.send_message(chat_id: message.chat.id, text: newbot.display_stat(value[0]), date: message.date)
         end
-        puts newbot.log_request
+
       end
     rescue StandardError => e
       puts e.message

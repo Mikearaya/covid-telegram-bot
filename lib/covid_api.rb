@@ -20,31 +20,32 @@ class CovidAPI
   end
 
   def by_country(search)
-    @summary = make_the_request
-    val = @summary['Countries'].select do |country|
-      country['Country'].downcase == search.to_s.downcase ||
-        country['CountryCode'].downcase == search.to_s.downcase
+    @summary = countries_request
+    val = @summary.select do |country|
+      country['Name'].downcase == search.to_s.downcase ||
+        country['CountryInfo']['CountryCode'].downcase == search.to_s.downcase
     end
     val
   end
 
   def query_result(search = '')
-    @summary = make_the_request
-    val = @summary['Countries'].select do |country|
-      country['Country'].downcase.match?(search.to_s.downcase) ||
-        country['CountryCode'].downcase.match?(search.to_s.downcase)
+    @summary = countries_request
+    val = @summary.select do |country|
+      country['Name'].downcase.match?(search.to_s.downcase) ||
+        country['CountryInfo']['CountryCode'].downcase.match?(search.to_s.downcase)
     end
 
     results = []
     val.each_with_index do |item, i|
-      results << { id: i, name: item['Country'], stat: item, flag: Countries.generate_flag(item['CountryCode']) }
+      results << { id: i, name: item['Name'],
+                   stat: item,
+                   flag: Countries.generate_flag(item['CountryInfo']['CountryCode']) }
     end
     results
   end
 
   def global
-    @summary = make_the_request
-    @summary['Global']
+    @summary = summary_request
   end
 
   def supported_countries(text = '')
@@ -59,8 +60,16 @@ class CovidAPI
 
   private
 
-  def make_the_request
-    url = 'https://api.covid19api.com/summary'
+  def summary_request
+    url = 'http://corona.tuply.co.za/DataHandler.ashx?w=s&uq=k53mx8qtuvh641172'
+    uri = URI(url)
+    response = Net::HTTP.get(uri)
+    response = JSON.parse(response)
+    response
+  end
+
+  def countries_request
+    url = 'http://corona.tuply.co.za/DataHandler.ashx?w=c&s=c'
     uri = URI(url)
     response = Net::HTTP.get(uri)
     response = JSON.parse(response)
